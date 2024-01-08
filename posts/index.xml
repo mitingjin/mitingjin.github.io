@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 我还没有想好</title><link>https://mitingjin.com/posts/</link><description>Recent content in Posts on 我还没有想好</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>mitingjin</copyright><lastBuildDate>Sun, 07 Jan 2024 23:28:10 +0800</lastBuildDate><atom:link href="https://mitingjin.com/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>日记</title><link>https://mitingjin.com/posts/diary/</link><pubDate>Fri, 30 Sep 2022 00:00:00 +0800</pubDate><guid>https://mitingjin.com/posts/diary/</guid><description>新开这本日记，也为了督促自己下个学期多下些苦功。先要读完手边的莎士比亚的《亨利八世》……
+2022年09月30日 胡适之啊胡适之！你怎么能如此堕落！先前订下的学习计划你都忘了吗？
+子曰：“吾日三省吾身。”&amp;hellip;不能再这样下去了！</description></item><item><title>《C++20高级编程》第7章</title><link>https://mitingjin.com/posts/professional-cpp/chapter-7/</link><pubDate>Sun, 07 Jan 2024 23:28:10 +0800</pubDate><guid>https://mitingjin.com/posts/professional-cpp/chapter-7/</guid><description>在现代C++中，应尽可能避免底层内存操作。例如，不应使用动态分配内存的C风格数组，而应使用标准库容器，例如vector，它会自动处理所有内存分配操作；不应使用原始指针，而应使用智能指针，例如unique_ptr和shared_ptr，它们会自动释放不再需要的底层资源，例如内存。基本上，应尝试避免在代码中调用内存分配例程，例如new/new []和delete/delete []。当然，这并不总是可行的，并且在现有的代码中，很可能并非如此，所以专业C++程序员仍需要了解内存在幕后的工作原理。
+警告：
+在现代C++中，应尽可能避免底层内存操作，而使用现代结构，如容器和智能指针。
+7.1 使用动态内存 内存是计算机的底层组件，但是，即使在C++这样的高级语言中也仍要面对内存的问题。
+7.1.1 如何描绘内存 如果了解对象在内存中的表现形式，对动态内存的理解就会容易得多。
+int i{ 7 }; 这行代码在一个函数内，因此i是一个局部变量。
+i是在栈上分配的自动变量，当程序流离开作用域（变量在这个作用域中声明）时，会自动释放i。
+使用new关键字时，内存分配在自由存储区中。
+int* ptr{ nullptr }; ptr = new int; 这段代码在栈上创建了一个变量ptr，然后再自由存储区上分配内存，ptr指向这块内存。也可缩减为一行：
+int* ptr{ new int }; 注意，变量ptr仍在栈上，即使它指向的是自由存储区中的内存。指针只是一个变量，可在栈或自由存储区中，但人们很容易忘记这一点。然而，动态内存总是在自由存储区上分配。
+警告：
+作为经验法则，每次声明一个指针变量时，务必立即用适当的指针或nullptr进行初始化！不要令其处于未初始化状态。
+下面的例子展示了指针即可在栈中，也可在自由存储区中。
+int** handle{ nullptr }; handle = new int*; *handle = new int; 上面的代码首先声明一个指向整数指针的指针变量handle，然后，动态分配足够的内存来保存一个指向整数的指针，并将指向这个新内存的指针保存在handle中，接下来，将另一块足以保存整数的动态内存的指针保存在*handle的内存位置。其中一个指针保存在栈中（handle），另一个指针保存在自由存储区中（*handle）。
+7.1.2 分配和释放 要为变量创建空间，可使用new关键字。要释放这个空间给程序中的其他部分使用，可使用delete关键字。
+1. 使用new和delete关键字 要分配一块内存，可调用new关键字，并提供需要空间的变量的类型。new关键字返回指向那个内存的指针，但程序员应将这个指针保存在变量中。如果忽略了new关键字的返回值，或这个指针变量离开了作用域，那么这块内存就变成了遗弃的，因为无法在访问这块内存。这也称为内存泄漏。
+例如，下面的代码遗弃了一块足以保存int的内存。当自由存储区中有数据块无法从栈中直接或间接访问时，这块内存就被遗弃（或泄漏）了。
+void leaky() { new int; // BUG! Orphans/leaks memory! cout &amp;lt;&amp;lt; &amp;#34;I just leaked an int!</description></item><item><title>《C++20高级编程》第2章</title><link>https://mitingjin.com/posts/professional-cpp/chapter-2/</link><pubDate>Tue, 02 Jan 2024 15:31:14 +0800</pubDate><guid>https://mitingjin.com/posts/professional-cpp/chapter-2/</guid><description>你编写的每个应用程序都会使用某种类型的字符串。使用老式C语言时，没有太多选择，只能使用普通的以null结尾的字符数组表示字符串。遗憾的是，这种表示方式会导致很多问题，例如会导致安全漏洞的缓冲区溢出。C++标准库包含了一个安全易用的std::string类，这个类没有这些缺点。
+2.1 动态字符串 在将字符串当成一等对象支持的语言中，字符串有很多吸引人的特性，例如可扩展至任意大小，或能提取或替换字符串。在其它语言（如C语言中），字符串几乎就如后加入的功能，C语言中并没有真正好用的string数据类型，只有固定的字节数组。“字符串库”只不过是一组非常原始的函数，甚至没有边界检查的功能。C++提供了string作为一等数据类型。
+2.1.1 C风格字符串 在C语言中，字符串表示为字符的数组。字符串中的最后一个字符是null字符（\0），这样，操作字符串的代码就知道字符串在哪里结束。官方将这个null字符定义为NUL，这个拼写中只有一个L，而不是两个L。NUL和NULL指针是两回事。尽管C++提供了更好的字符串抽象，但理解C语言中使用的字符串技术非常重要，因为在C++程序设计中仍可能使用这些技术，最常见的一种情况是C++程序调用某个第三方库或与操作系统交互时调用基于C语言的接口。
+目前，程序员使用C字符串时最常犯的错误是忘记为\0字符分配空间。例如，字符串hello看上去有5个字符长，但在内存中需要6个字符的空间才能保存这个字符串的值，h e l l o \0。
+C++包含一些来自C语言的字符串操作函数，他们在&amp;lt;cstring&amp;gt;头文件中定义。通常，这些函数不直接操作内存分配。例如，strcpy()函数有两个字符串参数，这个函数将第二个字符串复制到第一个字符串，而不考虑第二个字符串能否恰当地填入第一个字符串。下面的代码试图在strcpy()函数之上构建一个包装器，这个包装器能够分配正确数量的内存并返回结果，而不是接受一个已经分配好的字符串。这个最初的尝试会被证明是错误的，函数通过strlen()函数获得字符串的长度，调用者负责释放由copyString()分配的内存：
+char* copyString(const char* str) { char* result{ new char[strlen(str)]}; // BUG! OFf by one! strcpy(result, str); return result; } copyString()函数的代码这样写是不正确的。strlen()函数返回字符串的长度，而不是保存这个字符串所需的内存量。对于字符串hello，strlen()返回的是5，而不是6。为字符串分配内存的正确方式是在实际字符所需的空间加1。一开始看到到处都需要加1可能会感到有些奇怪，但这是其工作方式，所以在使用C风格的字符串时要记住这一点。正确的实现代码如下：
+char* copyString(const char* str) { char* result{ new char[strlen(str)+1] }; strcpy(result, str); return result; } 要记住strlen()只返回字符串中实际字符数目的一种方式是：**考虑如果为一个由几个其它字符串构成的字符串分配空间，应该怎么做。**例如，如果函数接收3个字符串参数，并返回一个由这3个字符串串联而成的字符串，那么这个返回的字符串应该有多大？为精确分配足够空间，空间的大小应该是3个字符串的长度相加，然后加上1留给尾部的\0字符。如果strlen()的字符串长度包含\0，那么分配的内存就会过大。下面的代码通过strcpy()和strcat()函数执行这个操作，strcat()中的cat表示串联（concatenate）：
+char* appendStrings(const char* str1, const char* str2, const char* str3) { char* result{ new char[strlen(str1) + strlen(str2) + strlen(str3) + 1] }; strcpy(result, str1); strcat(result, str2); strcat(result, str3); return result; } C和C++中的sizeof()操作符可用于获得给定数据类型或变量的大小。例如，sizeof(char)返回1，因为字符的大小是1字节。但在C风格的字符串中，sizeof()和strlen()是不同的。**绝对不要通过sizeof()获得字符串的大小。**它根据C风格的字符串的存储方式来返回不同大小。如果C风格的字符串存储为char[]，则sizeof()返回字符串使用的实际内存，包括\0字符，例如：</description></item><item><title>《C++20高级编程》第1章</title><link>https://mitingjin.com/posts/professional-cpp/chapter-1/</link><pubDate>Thu, 28 Dec 2023 16:30:26 +0800</pubDate><guid>https://mitingjin.com/posts/professional-cpp/chapter-1/</guid><description>1.1 C++速成 1.1.1 小程序 “Hello World” // helloworld.cpp import &amp;lt;iostream&amp;gt;; int main() { std::cout &amp;lt;&amp;lt; &amp;#34;Hello, World!&amp;#34; &amp;lt;&amp;lt; std::endl; return 0; } 1. 注释 注释只是供编程人员阅读的一条消息，编译器会将其忽略。
+在C++中，可通过两种方法添加注释。
+// 用两条斜杠表明这一行中在它后面的内容都是注释 /* 使用多行注释也可以实现这个行为。 */ 2. 模块导入 C++20新特性：模块代替头文件机制。
+import &amp;lt;iostream&amp;gt;; 用import声明导入某个模块来使用这个模块中的功能。
+3. 预处理指令 如果你的编译器还不支持模块，只需要将import声明替换为#include预处理指令。
+#include &amp;lt;iostream&amp;gt;生成一个C++程序共有三个步骤：
+首先，代码经过预处理器，预处理器会识别代码中的元信息；其次，代码被编译或转换为计算机可识别的目标文件；最后，独立的目标文件被连接在一起生成一个应用程序。
+预处理指令以#字符开始。在此例中，include指令告诉预处理器：提取&amp;lt;iostream&amp;gt;头文件中的所有内容并提供给当前文件。&amp;lt;iostream&amp;gt;头文件声明了C++提供的输入输出机制。
+头文件最常用的用途是声明在其他地方定义的函数。函数声明会通知编译器如何调用这个函数，并声明函数中参数的个数和类型，以及函数的返回类型。函数定义包含了这个函数的实际代码。
+在C++20引入模块之前，声明通常放在扩展名为.h的头文件中，其定义通常包含在扩展名为.cpp的源文件中。有了模块，我们不再需要将声明和定义分离，但这样的写法依然是可行的。
+注意：
+在C中，标准库头文件的名称通常以.h结尾，不使用名称空间。
+在C++中，标准库头文件的名称省略了.h后缀，所有文件都在std名称空间和std的子名称空间中定义。
+C中的标准库头文件在C++中依然存在，但使用以下两个版本。
+推荐不使用.h后缀，改用前缀c；这些头文件将所有内容放在std名称空间中。 使用.h后缀，这是旧版本，这些版本不使用名称空间。 注意，我们不能保证这些C标准库头文件是可以通过import声明导入的。为安全起见，使用#include &amp;lt;cxyz&amp;gt;而不是import &amp;lt;cxyz&amp;gt;。
+@TODO 最常用的预处理指令
+使用预处理指令避免重复包含的实例：
+#ifndef MYHEADER_H #define MYHEADER_H // .</description></item><item><title>清空 Git 仓库全部历史记录</title><link>https://mitingjin.com/posts/clear-all-commit-history-in-a-git-repository/</link><pubDate>Sun, 19 Mar 2023 18:06:09 +0800</pubDate><guid>https://mitingjin.com/posts/clear-all-commit-history-in-a-git-repository/</guid><description>切换到 master 分支 git checkout master 创建一个干净的分支 git checkout --orphan new_master 提交全部文件 git add -A git commit -m &amp;#34;initial commit&amp;#34; 删除 master 分支 git branch -D master 将新分支重命名为 master git branch -m master 强制推动到远程仓库 git push -f origin master 原文链接：清空 Git 仓库全部历史记录</description></item></channel></rss>
