@@ -1,0 +1,27 @@
+<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>我还没有想好</title><link>https://mitingjin.com/</link><description>Recent content on 我还没有想好</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>mitingjin</copyright><lastBuildDate>Sun, 19 Mar 2023 18:06:09 +0800</lastBuildDate><atom:link href="https://mitingjin.com/index.xml" rel="self" type="application/rss+xml"/><item><title>清空 Git 仓库全部历史记录</title><link>https://mitingjin.com/posts/clear-all-commit-history-in-a-git-repository/</link><pubDate>Sun, 19 Mar 2023 18:06:09 +0800</pubDate><guid>https://mitingjin.com/posts/clear-all-commit-history-in-a-git-repository/</guid><description>我还没有想好 https://mitingjin.com/posts/clear-all-commit-history-in-a-git-repository/ -&lt;ol>
+&lt;li>切换到 master 分支&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git checkout master
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="2">
+&lt;li>创建一个干净的分支&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git checkout --orphan new_master
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="3">
+&lt;li>提交全部文件&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git add -A
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git commit -m &lt;span style="color:#cd5555">&amp;#34;Initial commit&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="4">
+&lt;li>删除 master 分支&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git branch -D master
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="5">
+&lt;li>将新分支重命名为 master&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git branch -m master
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="6">
+&lt;li>强制推动到远程仓库&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git push -f origin master
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>原文链接：&lt;a href="https://shixiongfei.com/clear-history-of-git.html">清空 Git 仓库全部历史记录&lt;/a>&lt;/p>
+- https://mitingjin.com/posts/clear-all-commit-history-in-a-git-repository/ - mitingjin</description></item></channel></rss>
